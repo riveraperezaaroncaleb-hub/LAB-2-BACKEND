@@ -130,11 +130,55 @@ export default function RestaurantePanelPage() {
               <span className="form-hint">Capacidad total: {panelData.total_mesas} mesas activas</span>
             </div>
 
-            <div className="occupancy-bar-chart">
+            <div
+              className="occupancy-bar-chart"
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-end',
+                justifyContent: 'space-between',
+                gap: '0.8rem',
+                overflowX: 'auto',
+                padding: '1.5rem 1rem 1rem',
+                minHeight: '220px',
+                background: '#090d16',
+                borderRadius: '8px',
+                border: '1px solid #242f48'
+              }}
+            >
               {panelData.ocupacion_horaria.map((slot) => (
-                <div key={slot.franja} className="occupancy-col">
-                  <div className="occupancy-value-label">{slot.porcentaje_ocupacion}%</div>
-                  <div className="occupancy-bar-track">
+                <div
+                  key={slot.franja}
+                  className="occupancy-col"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    flex: 1,
+                    minWidth: '55px',
+                    height: '190px'
+                  }}
+                >
+                  <div
+                    className="occupancy-value-label"
+                    style={{ fontSize: '0.75rem', fontWeight: 700, color: '#9ca3af', marginBottom: '0.4rem' }}
+                  >
+                    {slot.porcentaje_ocupacion}%
+                  </div>
+                  <div
+                    className="occupancy-bar-track"
+                    style={{
+                      width: '100%',
+                      maxWidth: '36px',
+                      height: '120px',
+                      background: '#1f2937',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      overflow: 'hidden'
+                    }}
+                  >
                     <div
                       className={`occupancy-bar-level ${
                         slot.porcentaje_ocupacion >= 75
@@ -143,12 +187,33 @@ export default function RestaurantePanelPage() {
                           ? 'level-med'
                           : 'level-low'
                       }`}
-                      style={{ height: `${Math.max(slot.porcentaje_ocupacion, 6)}%` }}
+                      style={{
+                        width: '100%',
+                        height: `${Math.max(slot.porcentaje_ocupacion, 6)}%`,
+                        borderRadius: '4px 4px 0 0',
+                        transition: 'height 0.4s ease',
+                        background:
+                          slot.porcentaje_ocupacion >= 75
+                            ? 'linear-gradient(180deg, #f87171, #dc2626)'
+                            : slot.porcentaje_ocupacion >= 40
+                            ? 'linear-gradient(180deg, #fbbf24, #d97706)'
+                            : 'linear-gradient(180deg, #38bdf8, #2563eb)'
+                      }}
                       title={`${slot.reservas_activas} de ${slot.total_mesas} mesas ocupadas`}
                     />
                   </div>
-                  <div className="occupancy-slot-label">{slot.franja}</div>
-                  <small className="occupancy-sub">{slot.reservas_activas} mes.</small>
+                  <div
+                    className="occupancy-slot-label"
+                    style={{ fontSize: '0.8rem', fontWeight: 700, color: '#f3f4f6', marginTop: '0.5rem' }}
+                  >
+                    {slot.franja}
+                  </div>
+                  <small
+                    className="occupancy-sub"
+                    style={{ fontSize: '0.7rem', color: '#6b7280' }}
+                  >
+                    {slot.reservas_activas} mes.
+                  </small>
                 </div>
               ))}
             </div>

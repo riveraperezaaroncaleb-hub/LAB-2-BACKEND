@@ -871,3 +871,112 @@ body {
 .empty-state p {
   margin-bottom: 1.5rem;
 }
+
+/* =========================================================
+   ESTILOS: PANEL DE RESERVAS Y OCUPACIÓN HORARIA
+   ========================================================= */
+.date-picker {
+  max-width: 170px;
+}
+
+.occupancy-bar-chart {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 1.5rem 1rem 1rem;
+  min-height: 220px;
+  background-color: var(--bg-main, #0b0f19);
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid var(--border-color, #242f48);
+}
+
+.occupancy-col {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex: 1;
+  min-width: 55px;
+  height: 190px;
+}
+
+.occupancy-value-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted, #9ca3af);
+  margin-bottom: 0.4rem;
+}
+
+.occupancy-bar-track {
+  width: 100%;
+  max-width: 36px;
+  height: 120px;
+  background-color: var(--bg-card-hover, #1f2937);
+  border-radius: var(--radius-sm, 6px);
+  display: flex !important;
+  align-items: flex-end !important;
+  overflow: hidden;
+}
+
+.occupancy-bar-level {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.4s ease;
+}
+
+.level-low {
+  background: linear-gradient(180deg, #38bdf8, #2563eb);
+}
+
+.level-med {
+  background: linear-gradient(180deg, #fbbf24, #d97706);
+}
+
+.level-high {
+  background: linear-gradient(180deg, #f87171, #dc2626);
+}
+
+.occupancy-slot-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-main, #f3f4f6);
+  margin-top: 0.5rem;
+}
+
+.occupancy-sub {
+  font-size: 0.7rem;
+  color: var(--text-subtle, #6b7280);
+}
+
+.badge-pendiente {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-confirmada {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-cumplida {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-cancelada {
+  background-color: rgba(100, 116, 139, 0.15);
+  color: #94a3b8;
+  border: 1px solid rgba(100, 116, 139, 0.3);
+}
+
+.badge-no_show {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
