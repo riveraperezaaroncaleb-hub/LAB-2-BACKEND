@@ -102,6 +102,18 @@ export default function NuevaReservaPage() {
       </div>
 
       <div className="create-card">
+        {/* Strip de imágenes de comida */}
+        <div className="reserva-food-strip">
+          <div>
+            <img src="/corte_parrilla.jpg" alt="Corte a la parrilla" className="reserva-food-strip-img" />
+            <div className="reserva-food-strip-caption">🥩 Corte premium a la parrilla</div>
+          </div>
+          <div>
+            <img src="/hero_guiso.jpg" alt="Guiso de la casa" className="reserva-food-strip-img" />
+            <div className="reserva-food-strip-caption">🍲 Guiso tradicional de la casa</div>
+          </div>
+        </div>
+
         <div className="create-card-header">
           <h1 className="page-title">Reservar Mesa</h1>
           <p className="page-subtitle">

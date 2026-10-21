@@ -1,39 +1,51 @@
 /* =========================================================
-   VARIABLES Y SISTEMA DE DISEÑO MODERNO (DASHBOARD)
+   VARIABLES – PALETA GASTRONÓMICA CÁLIDA
+   Fondo: borgoña oscuro · Acento: ámbar dorado · Cards: terracota
    ========================================================= */
 :root {
-  --bg-main: #0b0f19;
-  --bg-card: #111827;
-  --bg-card-hover: #1f2937;
-  --bg-input: #1f293d;
-  --border-color: #242f48;
+  /* Fondos – tonos vino y borgoña profundo */
+  --bg-main: #1a0a0a;
+  --bg-card: #261414;
+  --bg-card-hover: #321c1c;
+  --bg-input: #2e1717;
+  --border-color: #4a2828;
 
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
-  --text-subtle: #6b7280;
+  /* Tipografía – crema cálida */
+  --text-main: #fdf6ee;
+  --text-muted: #c8a87a;
+  --text-subtle: #9a7355;
 
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
+  /* Primario – ámbar dorado */
+  --primary: #e8920a;
+  --primary-hover: #c97a06;
 
-  --urgencia-alta: #ef4444;
-  --urgencia-alta-bg: rgba(239, 68, 68, 0.15);
-  --urgencia-media: #f59e0b;
-  --urgencia-media-bg: rgba(245, 158, 11, 0.15);
-  --urgencia-baja: #10b981;
-  --urgencia-baja-bg: rgba(16, 185, 129, 0.15);
+  /* Urgencias – mantener legibilidad */
+  --urgencia-alta: #f87171;
+  --urgencia-alta-bg: rgba(248, 113, 113, 0.15);
+  --urgencia-media: #fbbf24;
+  --urgencia-media-bg: rgba(251, 191, 36, 0.15);
+  --urgencia-baja: #34d399;
+  --urgencia-baja-bg: rgba(52, 211, 153, 0.15);
 
-  --estado-abierto: #38bdf8;
-  --estado-abierto-bg: rgba(56, 189, 248, 0.15);
-  --estado-progreso: #a855f7;
-  --estado-progreso-bg: rgba(168, 85, 247, 0.15);
-  --estado-cerrado: #64748b;
-  --estado-cerrado-bg: rgba(100, 116, 139, 0.15);
+  /* Estados */
+  --estado-abierto: #fb923c;
+  --estado-abierto-bg: rgba(251, 146, 60, 0.15);
+  --estado-progreso: #f472b6;
+  --estado-progreso-bg: rgba(244, 114, 182, 0.15);
+  --estado-cerrado: #78716c;
+  --estado-cerrado-bg: rgba(120, 113, 108, 0.15);
 
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
 
-  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 4px 24px -2px rgba(0, 0, 0, 0.55);
+
+  /* Acento especial para detalles dorados */
+  --gold: #f59e0b;
+  --gold-light: #fcd34d;
+  --terracota: #c2410c;
+  --vino: #7f1d1d;
 }
 
 /* =========================================================
@@ -48,9 +60,58 @@
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-main);
+  /* Fondo con gradiente cálido y textura de puntos sutiles */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(185, 70, 10, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(146, 30, 10, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 35% at 50% 50%, rgba(245, 158, 11, 0.07) 0%, transparent 70%),
+    radial-gradient(circle at 10% 90%, rgba(194, 65, 12, 0.12) 0%, transparent 40%),
+    url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.018'%3E%3Ccircle cx='20' cy='20' r='1'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Blobs animados de color calido en fondo */
+body::before {
+  content: '';
+  position: fixed;
+  top: -30%;
+  left: -20%;
+  width: 70vw;
+  height: 70vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(194, 65, 12, 0.12) 0%, transparent 65%);
+  animation: blobDrift 18s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -25%;
+  right: -15%;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.10) 0%, transparent 65%);
+  animation: blobDrift 22s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes blobDrift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(4%, 6%) scale(1.08); }
+  100% { transform: translate(-3%, -4%) scale(0.96); }
+}
+
+/* Asegurar que el contenido quede sobre los blobs */
+.app-layout {
+  position: relative;
+  z-index: 1;
 }
 
 /* =========================================================
@@ -60,12 +121,22 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 .navbar {
-  background-color: rgba(17, 24, 39, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-color);
+  /* Glassmorphism cálido – vidrio ahumado color vino */
+  background: linear-gradient(
+    to right,
+    rgba(38, 12, 12, 0.88) 0%,
+    rgba(50, 18, 10, 0.88) 50%,
+    rgba(38, 12, 12, 0.88) 100%
+  );
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid rgba(194, 65, 12, 0.3);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4), 0 1px 0 rgba(245,158,11,0.08) inset;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -125,18 +196,21 @@ body {
 }
 
 .nav-link.active {
-  color: #fff;
-  background-color: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #fde68a;
+  background-color: rgba(232, 146, 10, 0.18);
+  border: 1px solid rgba(232, 146, 10, 0.4);
 }
 
 .btn-new {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, #e8920a, #c97a06) !important;
   color: #fff !important;
+  box-shadow: 0 2px 12px rgba(232,146,10,0.35);
 }
 
 .btn-new:hover {
-  background-color: var(--primary-hover) !important;
+  background: linear-gradient(135deg, #f5a623, #e8920a) !important;
+  box-shadow: 0 4px 18px rgba(232,146,10,0.5);
+  transform: translateY(-1px);
 }
 
 .main-content {
@@ -200,27 +274,34 @@ body {
 }
 
 .btn-primary {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, #e8920a 0%, #c2410c 100%);
   color: #fff;
+  box-shadow: 0 2px 14px rgba(232, 146, 10, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover);
+  background: linear-gradient(135deg, #f5a623 0%, #e05a0a 100%);
+  box-shadow: 0 4px 20px rgba(232, 146, 10, 0.5);
+  transform: translateY(-1px);
 }
 
 .btn-primary:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .btn-secondary {
   background-color: var(--bg-card-hover);
   color: var(--text-main);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(194, 65, 12, 0.35);
 }
 
 .btn-secondary:hover {
-  background-color: #2d3748;
+  background-color: rgba(232, 146, 10, 0.12);
+  border-color: rgba(232, 146, 10, 0.5);
+  color: #fde68a;
 }
 
 .btn-table-action {
@@ -979,4 +1060,213 @@ body {
   background-color: rgba(239, 68, 68, 0.15);
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* =========================================================
+   FOOD HERO – Sección gastronómica apetitosa
+   ========================================================= */
+.food-hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(17,24,39,0.9) 0%, rgba(11,15,25,0.98) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.food-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 50%, rgba(245,158,11,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.food-hero-images {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 0.75rem;
+  height: 320px;
+}
+
+.food-hero-img-wrap {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: default;
+}
+
+.food-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: block;
+}
+
+.food-hero-img-wrap:hover .food-hero-img {
+  transform: scale(1.07);
+}
+
+.food-hero-img-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 0.8rem 0.8rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transform: translateY(4px);
+  transition: transform 0.3s ease;
+}
+
+.food-hero-img-wrap:hover .food-hero-img-overlay {
+  transform: translateY(0);
+}
+
+.food-hero-badge {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.85);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.3px;
+}
+
+.food-hero-badge--gold {
+  background: rgba(217, 119, 6, 0.9);
+}
+
+/* Texto del hero */
+.food-hero-text {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.food-hero-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #f59e0b;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.4rem;
+}
+
+.food-hero-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #fff 0%, #f59e0b 60%, #ef4444 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.9rem;
+}
+
+.food-hero-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 1.4rem;
+}
+
+.food-hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.food-pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.food-pill:hover {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #f59e0b;
+}
+
+/* Responsive hero */
+@media (max-width: 900px) {
+  .food-hero {
+    grid-template-columns: 1fr;
+  }
+  .food-hero-images {
+    height: 220px;
+  }
+  .food-hero-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .food-hero-images {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .food-hero-img-wrap {
+    height: 180px;
+  }
+  .food-hero-img-wrap--lg {
+    display: none;
+  }
+}
+
+/* Strip de imagen apetitoso en página de reserva */
+.reserva-food-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  height: 190px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.reserva-food-strip-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.reserva-food-strip > div {
+  overflow: hidden;
+  position: relative;
+}
+
+.reserva-food-strip > div:hover .reserva-food-strip-img {
+  transform: scale(1.05);
+}
+
+.reserva-food-strip-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.6rem 0.8rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
 }

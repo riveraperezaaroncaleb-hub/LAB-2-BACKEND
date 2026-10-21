@@ -48,6 +48,40 @@ export default function RestaurantePanelPage() {
 
   return (
     <div className="page-container">
+
+      {/* ── Hero gastronómico ── */}
+      <div className="food-hero">
+        <div className="food-hero-images">
+          <div className="food-hero-img-wrap">
+            <img src="/hero_guiso.jpg" alt="Guiso tradicional de la casa" className="food-hero-img" />
+            <div className="food-hero-img-overlay">
+              <span className="food-hero-badge">🍲 Especialidad</span>
+              <p>Guiso tradicional de la casa</p>
+            </div>
+          </div>
+          <div className="food-hero-img-wrap food-hero-img-wrap--lg">
+            <img src="/corte_parrilla.jpg" alt="Corte a la parrilla premium" className="food-hero-img" />
+            <div className="food-hero-img-overlay">
+              <span className="food-hero-badge food-hero-badge--gold">🥩 Parrilla</span>
+              <p>Corte premium a la parrilla</p>
+            </div>
+          </div>
+        </div>
+        <div className="food-hero-text">
+          <div className="food-hero-eyebrow">Bienvenido a</div>
+          <h2 className="food-hero-title">Sabor y Tradición</h2>
+          <p className="food-hero-desc">
+            Cocina de autor con ingredientes frescos de temporada.<br />
+            Reserva tu mesa y vive una experiencia gastronómica única.
+          </p>
+          <div className="food-hero-pills">
+            <span className="food-pill">🕐 Abierto todos los días</span>
+            <span className="food-pill">🍷 Maridaje incluido</span>
+            <span className="food-pill">⭐ Cocina premiada</span>
+          </div>
+        </div>
+      </div>
+
       {/* Encabezado y filtro de fecha */}
       <div className="page-header">
         <div>
