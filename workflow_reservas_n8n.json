@@ -1,0 +1,117 @@
+{
+  "name": "Agente IA Reservas Restaurante",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300],
+      "webhookId": "reservas-restaurante-chat"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Eres el asistente virtual de reservas del restaurante. Tu misión es interpretar solicitudes de reserva en lenguaje natural, consultar la disponibilidad real mediante la herramienta 'ConsultarDisponibilidad' y proponer las mesas ideales.\n\nFecha actual de referencia: {{ $now.format('YYYY-MM-DD') }} (día de la semana: {{ $now.format('dddd') }}).\n\nReglas:\n1. Resuelve fechas relativas (ej: 'hoy', 'mañana', 'el viernes', 'el próximo sábado') convirtiéndolas a formato YYYY-MM-DD tomando como base la fecha actual.\n2. Convierte horas a formato de 24 horas HH:MM (ej: 'las 8 de la noche' -> '20:00', 'las 2 de la tarde' -> '14:00'). Recuerda que cada reserva dura exactamente 2 horas.\n3. Extrae la cantidad de personas (ej: 'mesa para 4' -> 4 personas) y la preferencia de ubicación (interior, terraza, barra, vip).\n4. Ejecuta la herramienta 'ConsultarDisponibilidad' con los parámetros extraídos.\n5. Si hay disponibilidad, presenta cordialmente la 'mesa_sugerida' (la de menor capacidad adecuada para no desperdiciar mesas grandes) y lista las demás opciones.\n6. Si no hay disponibilidad o el restaurante está cerrado, explica el motivo que reporta el sistema y ofrece alternativas amablemente."
+        }
+      },
+      "id": "2",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "id": "3",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [460, 520],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "CREDENTIAL_ID_HERE",
+          "name": "Google Gemini Credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "ConsultarDisponibilidad",
+        "description": "Consulta mesas disponibles y optimizadas en el restaurante. Requiere fecha (YYYY-MM-DD), hora (HH:MM formato 24h), personas (número) y ubicación opcional (interior, terraza, barra, vip).",
+        "method": "GET",
+        "url": "http://localhost:5000/api/disponibilidad",
+        "specifyQuery": "keypair",
+        "queryParams": {
+          "parameters": [
+            {
+              "name": "fecha",
+              "value": "={{ /* n8n parameter */ $fromAI('fecha', 'Fecha de la reserva en formato YYYY-MM-DD') }}"
+            },
+            {
+              "name": "hora",
+              "value": "={{ /* n8n parameter */ $fromAI('hora', 'Hora de inicio de la reserva en formato HH:MM (24 horas)') }}"
+            },
+            {
+              "name": "personas",
+              "value": "={{ /* n8n parameter */ $fromAI('personas', 'Cantidad de personas') }}"
+            },
+            {
+              "name": "ubicacion",
+              "value": "={{ /* n8n parameter */ $fromAI('ubicacion', 'Ubicación deseada: interior, terraza, barra, vip') }}"
+            }
+          ]
+        }
+      },
+      "id": "4",
+      "name": "HTTP Request Tool - Disponibilidad",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [680, 520]
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Tool - Disponibilidad": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
